@@ -1,26 +1,26 @@
-void delay_sec(unsigned int seconds)  // generating delay in seconds
-{
-T0PR=15000000-1;   // setting value in prescale register
-T0TCR=0X01;		   // enabling timer counter and prescale counter for counting
-while(T0TC<seconds);//waiting till the timer counter reaches the seconds value
-T0TCR=0X03; //reset counter
-T0TCR=0X00; //turning off 
+// Delay in seconds
+void delaySeconds(unsigned int sec) {
+    T0PR = 15000000 - 1;        // Set prescaler to generate 1-second tick (15 MHz / 15,000,000 = 1 Hz)
+    T0TCR = 0x01;               // Enable timer and prescaler
+    while (T0TC < sec);         // Wait until timer counter reaches 'sec'
+    T0TCR = 0x03;               // Reset timer and counter
+    T0TCR = 0x00;               // Disable timer
 }
 
-void delay_ms(unsigned int ms)   //generating delay in milliseconds
-{
-T0PR=15000-1;
-T0TCR=0X01;
-while(T0TC<ms);
-T0TCR=0X03;
-T0TCR=0X00;
+// Delay in milliseconds
+void delayMilliseconds(unsigned int millisec) {
+    T0PR = 15000 - 1;           // Set prescaler to generate 1 ms tick (15 MHz / 15,000 = 1 kHz)
+    T0TCR = 0x01;               // Start timer
+    while (T0TC < millisec);    // Wait until timer reaches 'millisec'
+    T0TCR = 0x03;               // Reset timer
+    T0TCR = 0x00;               // Stop timer
 }
 
-void delay_microseconds(unsigned int microsec) // generating delay in microseconds
-{
-T0PR=15000000-1;
-T0TCR=0X01;
-while(T0TC<microsec);
-T0TCR=0X03;
-T0TCR=0X00;
+// Delay in microseconds
+void delayMicroseconds(unsigned int ms) {
+    T0PR = 15 - 1;              // Set prescaler for 1 µs tick (15 MHz / 15 = 1 MHz)
+    T0TCR = 0x01;               // Start timer
+    while (T0TC < ms);          // Wait until timer reaches 'ms'
+    T0TCR = 0x03;               // Reset timer
+    T0TCR = 0x00;               // Stop timer
 }
