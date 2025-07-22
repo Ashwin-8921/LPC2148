@@ -35,3 +35,18 @@ void pinWrite(int pinNr,int pinValue)
 	}
 		
 }
+
+int pinRead(int pinnr)
+{
+	if(pinnr<100)
+	{
+		IODIR0&=~(1<<pinnr);
+		return (IOPIN0>>pinnr)&1;
+	}
+	else
+	{
+		pinnr-=100;
+		IODIR1&=~(1<<pinnr);
+		return (IOPIN1>>pinnr)&1;
+	}
+}

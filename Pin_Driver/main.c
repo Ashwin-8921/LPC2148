@@ -7,12 +7,6 @@ void delay(int n)
 	for(i=0;i<n;i++);
 }
 
-
-
-
-
-
-
 int main()
 {
 	while(1)
