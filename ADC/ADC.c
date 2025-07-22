@@ -12,15 +12,15 @@ unsigned int adc;
 
 int main()
 {
-	uart_init();
+	uart_init();     // Initialize UART
 	while(1)
 	{	
-		adc = adc_get_data();
+		adc = adc_get_data();   // Get ADC converted digital value
 		uart_str("ADC:");
-    sprintf(buffer, "%d\r\n", adc);
+    sprintf(buffer, "%d\r\n", adc);  // Convert ADC value to string
     uart_str(buffer);
 		uart_str("\n\r");
-		delaySec(1);
+		delaySec(1);  // Delay for 1 second
 	
 	}
 	
@@ -40,11 +40,11 @@ unsigned int adc_get_data()
 	ADCR=ADCR|(1<<21);  //PDN = 1
 	ADCR=ADCR|(1<<24);  // start conversion
 	
-	while((ADDR & (1<<31))== 0);
-	my_data=ADDR;
-	my_data=(my_data>>6);
-	my_data=my_data & 0x3FF;
-	return my_data;
+	while((ADDR & (1<<31))== 0); // Wait for conversion to complete
+	my_data=ADDR;							// Read ADC result register
+	my_data=(my_data>>6);    // Right shift to get 10-bit result
+	my_data=my_data & 0x3FF;   // Mask to get only 10 bits (0–1023)
+	return my_data;		// Return ADC value
 	
 }
 
